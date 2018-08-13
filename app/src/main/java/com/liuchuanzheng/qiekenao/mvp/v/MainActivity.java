@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -13,8 +15,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.liuchuanzheng.qiekenao.R;
+import com.liuchuanzheng.qiekenao.mvp.v.adapter.MyMainPagerAdapter;
+import com.liuchuanzheng.qiekenao.mvp.v.fragment.HomeFragment;
+import com.liuchuanzheng.qiekenao.mvp.v.fragment.MineFragment;
+import com.liuchuanzheng.qiekenao.mvp.v.fragment.VideoFragment;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
+import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
@@ -53,11 +60,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initView() {
+        //设置viewpager
+        final ViewPager viewPager  = findViewById(R.id.vp);
+        List<Fragment> fragmentList = new ArrayList<>();
+        fragmentList.add(new HomeFragment());
+        fragmentList.add(new VideoFragment());
+        fragmentList.add(new MineFragment());
+        MyMainPagerAdapter myMainPagerAdapter = new MyMainPagerAdapter(getSupportFragmentManager(), fragmentList);
+        viewPager.setAdapter(myMainPagerAdapter);
+        //设置drawer
         DrawerLayout drawerLayout  = findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawers();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        //设置底部导航栏
         final MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator);
         CommonNavigator commonNavigator = new CommonNavigator(this);
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
@@ -70,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public IPagerTitleView getTitleView(Context context, final int index) {
+
                 CommonPagerTitleView titleView = new CommonPagerTitleView(context);
                 titleView.setContentView(R.layout.item_main_tab_indicator_layout);//加载自定义布局作为Tab
 
@@ -80,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onSelected(int i, int i1) {
                         tab_btn.setBackgroundResource(pressedResId[i]);
+                        viewPager.setCurrentItem(index);
                     }
 
                     @Override
@@ -116,6 +134,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         magicIndicator.setNavigator(commonNavigator);
+        ViewPagerHelper.bind(magicIndicator, viewPager);
+
     }
 
     @Override
