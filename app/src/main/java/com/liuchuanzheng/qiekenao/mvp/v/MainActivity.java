@@ -1,7 +1,9 @@
-package com.liuchuanzheng.qiekenao;
+package com.liuchuanzheng.qiekenao.mvp.v;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.liuchuanzheng.qiekenao.R;
 
 public class MainActivity extends AppCompatActivity {
 
