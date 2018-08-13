@@ -7,13 +7,29 @@
     android:layout_height="match_parent"
     tools:context=".mvp.v.MainActivity">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/fl_content"
+            android:layout_above="@id/tv_line"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+        </FrameLayout>
+        <TextView
+            android:id="@+id/tv_line"
+            android:layout_width="match_parent"
+            android:layout_above="@id/magic_indicator"
+            android:background="#6b5b5b"
+            android:layout_height="1dp" />
+            <net.lucode.hackware.magicindicator.MagicIndicator
+                android:layout_alignParentBottom="true"
+                android:id="@+id/magic_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
 
-
-    </FrameLayout>
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
