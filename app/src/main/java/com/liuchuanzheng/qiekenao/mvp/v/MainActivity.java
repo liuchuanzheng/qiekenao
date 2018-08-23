@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //设置底部导航栏
         final MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator);
         CommonNavigator commonNavigator = new CommonNavigator(this);
+        commonNavigator.setAdjustMode(true); //ture 即标题平分屏幕宽度的模式
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
 
             @Override
@@ -132,6 +133,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 indicator.setColors(Color.RED);
                 return indicator;
             }
+
+
         });
         magicIndicator.setNavigator(commonNavigator);
         ViewPagerHelper.bind(magicIndicator, viewPager);
